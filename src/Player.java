@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -50,5 +51,28 @@ public class Player {
         }
         
         return board[rowChar2Int.get(row)][column-1];
+    }
+    
+    public ArrayList getIndexArray(String input){
+        ArrayList<Integer> index = new ArrayList<Integer>();
+        
+        char row = input.charAt(0);
+        int column = Integer.valueOf(input.charAt(1)) - 48;
+        
+        Map<Character, Integer> rowChar2Int = new HashMap<Character, Integer>();
+        
+        char j = 'A';
+        for(int i=0; i<7; i++){
+            rowChar2Int.put(j++, i);
+        }
+        
+        index.add(rowChar2Int.get(j));
+        index.add(column);
+        
+        return index;
+    }
+    
+    public boolean hit(char board[][], ArrayList<Integer> index, char el){
+        return board[index.get(0)][index.get(1)] == el;
     }
 }
