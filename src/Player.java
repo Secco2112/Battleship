@@ -7,28 +7,22 @@ public class Player {
     String name[] = new String[2];
     Scanner scanner = new Scanner(System.in);
     
-    public String readAndValidate(){
-        System.out.printf("Digite uma letra seguido por um dígito para identificar a linha e a coluna: ");
+    public String validateInput(String input){
         
-        String input = scanner.nextLine();
         String output = "";
         
         char row = input.charAt(0);
         char column = input.charAt(1);
         
-        while(row<'A' || row>'G'){
-            System.out.println("Caracter inválido para a linha. Realize a leitura novamente.");
+        while((row<'A' || row>'G') && (column<'1' || column>'7')){
+            System.out.println("Posição inválida. Realize a leitura novamente.");
             input = scanner.nextLine();
             row = input.charAt(0);
+            column = input.charAt(1);
         }
         row = input.charAt(0);
         output+=row;
         
-        while(column<'1' || column>'7'){
-            System.out.println("Valor inválido para a coluna. Realize a leitura novamente.");
-            input = scanner.nextLine();
-            column = input.charAt(1);
-        }
         column = input.charAt(1);
         output+=column;
         
@@ -66,13 +60,17 @@ public class Player {
             rowChar2Int.put(j++, i);
         }
         
-        index.add(rowChar2Int.get(j));
-        index.add(column);
+        index.add(rowChar2Int.get(row));
+        index.add(column-1);
         
         return index;
     }
     
-    public boolean hit(char board[][], ArrayList<Integer> index, char el){
-        return board[index.get(0)][index.get(1)] == el;
+    public boolean hit(char board[][], ArrayList<Integer> index){
+        return board[index.get(0)][index.get(1)] == 'X';
+    }
+    
+    public String getName(int time){
+        return this.name[this.gameTime(time)];
     }
 }
