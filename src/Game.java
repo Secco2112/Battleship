@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.nio.file.Paths;
@@ -12,6 +11,7 @@ public class Game {
     
     Ship ship = new Ship();
     Player player = new Player();
+    Scanner sc = new Scanner(System.in);
     
     public Game(char board1[][], char board2[][], char complete1[][], char complete2[][]){
         for(int i=0;i<7;i++){
@@ -26,8 +26,8 @@ public class Game {
         this.completeField2 = complete2;
     }
     
-    public void print(String message, String... format){
-        if(format.length==0) System.out.print(message);
+    public void print(String format, String message){
+        if(format.equals("")) System.out.print(message);
         else if(format.equals("ln")) System.out.println(message);
         else if(format.equals("f")) System.out.printf("%s", message);
     }
@@ -35,7 +35,35 @@ public class Game {
     public void startGame(){
         ship.generateAllShips(completeField1);
         ship.generateAllShips(completeField2);
-        this.print("BATALHA NAVAL\n\n", "ln");
+        
+    }
+    
+    public void menu(){
+        print("ln", "BATALHA NAVAL!\n");
+        print("ln", "1. Novo jogo");
+        print("ln", "2. Regras");
+        print("ln", "3. Sair");
+        
+        print("", "Console: ");
+        int option = sc.nextInt();
+        
+        while(option<1 || option>3){
+            print("ln", "Escolha uma opção entre 1 e 3.");
+            print("", "Console: ");
+            sc.nextInt();
+        }
+        
+        switch (option){
+            case 2:
+                // game.getRules();
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void getRules(){
         
     }
     
@@ -96,6 +124,25 @@ public class Game {
             for(int j=0;j<7;j++){
                 if(j<6) System.out.printf("%c | ", time==0? field1[i][j]: field2[i][j]);
                 else System.out.printf("%c", time==0? field1[i][j]: field2[i][j]);
+            }
+            System.out.println("");
+        }
+    }
+    
+    public void printCompletedBoard(int time){
+        char c = 'A';
+        for(int i=1;i<=7;i++){
+            if(i==1) System.out.printf("   ");
+            
+            if(i==7) System.out.printf("%d\n", i);
+            else System.out.printf("%d   ", i);
+        }
+        
+        for(int i=0;i<7;i++){
+            System.out.printf("%c  ", c++);
+            for(int j=0;j<7;j++){
+                if(j<6) System.out.printf("%c | ", time==0? completeField1[i][j]: completeField2[i][j]);
+                else System.out.printf("%c", time==0? completeField1[i][j]: completeField2[i][j]);
             }
             System.out.println("");
         }
