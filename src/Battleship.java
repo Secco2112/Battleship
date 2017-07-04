@@ -21,8 +21,16 @@ public class Battleship {
         
         game.startGame();
         
+        if(DEBUG){
+            game.printCompletedBoard(0);
+            game.printCompletedBoard(1);
+        }
+        
         while(true){
+           game.menu();
+            
            for(int i=0;i<2;i++){
+               if(i==0) game.print("ln", "");
                System.out.printf("Digite o nome do jogador %d: ", i+1);
                player.name[i] = scanner.nextLine();
            }
@@ -60,7 +68,7 @@ public class Battleship {
                    }
                    
                    if(player.won(time)){
-                       System.out.printf("%s venceu o jogo!\n", name);
+                       System.out.printf("\nParabéns, %s! Você venceu o jogo!\n", name);
                        break;
                    }
                }
