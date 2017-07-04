@@ -1,10 +1,15 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Player {
     String name[] = new String[2];
+    int hits[] = new int[2];
+    int checksCorrects1[][] = new int[7][7];
+    int checksCorrects2[][] = new int[7][7];
+    
     Scanner scanner = new Scanner(System.in);
     
     public String validateInput(String input){
@@ -72,5 +77,9 @@ public class Player {
     
     public String getName(int time){
         return this.name[this.gameTime(time)];
+    }
+    
+    public boolean won(int time){
+        return this.hits[this.gameTime(time)]==9;
     }
 }

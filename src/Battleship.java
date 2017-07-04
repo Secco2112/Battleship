@@ -50,7 +50,20 @@ public class Battleship {
                
                game.updateField(hit, currentField, index, name);
                
-               game.saveGame();
+               if(hit){
+                   if(player.gameTime(time)==0 && player.checksCorrects1[index.get(0)][index.get(1)]==0){
+                       player.checksCorrects1[index.get(0)][index.get(1)]=1;
+                       player.hits[player.gameTime(time)]++;
+                   } else if(player.gameTime(time)==1 && player.checksCorrects2[index.get(0)][index.get(1)]==0) {
+                       player.checksCorrects2[index.get(0)][index.get(1)]=1;
+                       player.hits[player.gameTime(time)]++;
+                   }
+                   
+                   if(player.won(time)){
+                       System.out.printf("%s venceu o jogo!\n", name);
+                       break;
+                   }
+               }
                
                game.separator();
                time++;
