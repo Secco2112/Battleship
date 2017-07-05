@@ -52,9 +52,31 @@ public class Battleship {
                
                ArrayList<Integer> index = player.getIndexArray(input);
                
+<<<<<<< HEAD
                if(player.played(time, index)){
                    time--;
                    System.out.printf("%s, você atirou em uma posição que já tinha escolhido. Atire novamente.", name);
+=======
+               if(DEBUG) System.out.println(index);
+               
+               boolean hit = player.hit(currentGeneratedField, index);
+               
+               game.updateField(hit, currentField, index, name);
+               
+               if(hit){
+                   if(player.gameTime(time)==0 && player.checksCorrects1[index.get(0)][index.get(1)]==0){
+                       player.checksCorrects1[index.get(0)][index.get(1)]=1;
+                       player.hits[player.gameTime(time)]++;
+                   } else if(player.gameTime(time)==1 && player.checksCorrects2[index.get(0)][index.get(1)]==0) {
+                       player.checksCorrects2[index.get(0)][index.get(1)]=1;
+                       player.hits[player.gameTime(time)]++;
+                   }
+                   
+                   if(player.won(time)){
+                       System.out.printf("\nParabéns, %s! Você venceu o jogo!\n", name);
+                       break;
+                   }
+>>>>>>> f0581680d613bee2ba167c23dc8410da1013f5c6
                }
                
                if(player.gameTime(time)==0){

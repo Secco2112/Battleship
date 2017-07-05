@@ -50,15 +50,25 @@ public class Game {
         while(option<1 || option>3){
             print("ln", "Escolha uma opção entre 1 e 3.");
             print("", "Console: ");
+<<<<<<< HEAD
             option = sc.nextInt();
+=======
+            sc.nextInt();
+>>>>>>> f0581680d613bee2ba167c23dc8410da1013f5c6
         }
         
         switch (option){
             case 2:
+<<<<<<< HEAD
                 this.getRules();
                 this.menu();
             case 3:
                 return;
+=======
+                // game.getRules();
+            case 3:
+                break;
+>>>>>>> f0581680d613bee2ba167c23dc8410da1013f5c6
             default:
                 break;
         }
@@ -148,4 +158,8 @@ public class Game {
             System.out.println("");
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f0581680d613bee2ba167c23dc8410da1013f5c6
