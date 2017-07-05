@@ -52,67 +52,51 @@ public class Battleship {
                
                ArrayList<Integer> index = player.getIndexArray(input);
                
-<<<<<<< HEAD
+               boolean flag;
+               
                if(player.played(time, index)){
-                   time--;
-                   System.out.printf("%s, você atirou em uma posição que já tinha escolhido. Atire novamente.", name);
-=======
-               if(DEBUG) System.out.println(index);
-               
-               boolean hit = player.hit(currentGeneratedField, index);
-               
-               game.updateField(hit, currentField, index, name);
-               
-               if(hit){
-                   if(player.gameTime(time)==0 && player.checksCorrects1[index.get(0)][index.get(1)]==0){
-                       player.checksCorrects1[index.get(0)][index.get(1)]=1;
-                       player.hits[player.gameTime(time)]++;
-                   } else if(player.gameTime(time)==1 && player.checksCorrects2[index.get(0)][index.get(1)]==0) {
-                       player.checksCorrects2[index.get(0)][index.get(1)]=1;
-                       player.hits[player.gameTime(time)]++;
-                   }
-                   
-                   if(player.won(time)){
-                       System.out.printf("\nParabéns, %s! Você venceu o jogo!\n", name);
-                       break;
-                   }
->>>>>>> f0581680d613bee2ba167c23dc8410da1013f5c6
-               }
-               
-               if(player.gameTime(time)==0){
-                   player.checksCorrects1[index.get(0)][index.get(1)]=1;
+                    flag = false;
+                    if(flag==false){
+                       time--;
+                       flag=true;
+                    }
+                    System.out.printf("%s, você atirou em uma posição que já tinha escolhido. Atire novamente.\n", name);
                } else {
-                   player.checksCorrects2[index.get(0)][index.get(1)]=1;
-               }
-             
-                if(DEBUG) System.out.println(index);
+                    boolean hit = player.hit(currentGeneratedField, index);
+               
+                    game.updateField(hit, currentField, index, name);
 
-                boolean hit = player.hit(currentGeneratedField, index);
+                    if(hit){
+                        if(player.gameTime(time)==0 && player.checksCorrects1[index.get(0)][index.get(1)]==0){
+                            player.checksCorrects1[index.get(0)][index.get(1)]=1;
+                            player.hits[player.gameTime(time)]++;
+                        } else if(player.gameTime(time)==1 && player.checksCorrects2[index.get(0)][index.get(1)]==0) {
+                            player.checksCorrects2[index.get(0)][index.get(1)]=1;
+                            player.hits[player.gameTime(time)]++;
+                        }
 
-                game.updateField(hit, currentField, index, name);
+                        if(player.won(time)){
+                            System.out.printf("\nParabéns, %s! Você venceu o jogo!\n", name);
+                            break;
+                        }
+                    }
 
-                if(hit){
-                    if(player.gameTime(time)==0 && player.checksCorrects1[index.get(0)][index.get(1)]==0){
+                    if(player.gameTime(time)==0){
                         player.checksCorrects1[index.get(0)][index.get(1)]=1;
-                        player.hits[player.gameTime(time)]++;
-                    } else if(player.gameTime(time)==1 && player.checksCorrects2[index.get(0)][index.get(1)]==0) {
+                    } else {
                         player.checksCorrects2[index.get(0)][index.get(1)]=1;
-                        player.hits[player.gameTime(time)]++;
                     }
 
-                    if(player.won(time)){
-                        System.out.printf("\nParabéns, %s! Você venceu o jogo!\n", name);
-                        break;
-                    }
-                }
+                     if(DEBUG) System.out.println(index);
 
-                game.separator();
-                time++;
-                
-                player.printCheck(time);
+                     game.separator();
+                     time++;
+                     flag=false;
+               }
+               System.out.println(time);
+               
            }
         }
-        
     }
     
 }
