@@ -8,16 +8,16 @@ public class Player {
     int hits[] = new int[2];
     int checksCorrects1[][] = new int[7][7];
     int checksCorrects2[][] = new int[7][7];
+    static int bomb1 = 1, bomb2 = 1;
     
     Scanner scanner = new Scanner(System.in);
     
     public String validateInput(String input){
-        
         String output = "";
-        
+
         char row = input.charAt(0);
         char column = input.charAt(1);
-        
+
         while((row<'A' || row>'G') && (column<'1' || column>'7')){
             System.out.println("Posição inválida. Realize a leitura novamente.");
             input = scanner.nextLine();
@@ -26,10 +26,10 @@ public class Player {
         }
         row = input.charAt(0);
         output+=row;
-        
+
         column = input.charAt(1);
         output+=column;
-        
+
         return output;
     }
     
@@ -80,5 +80,34 @@ public class Player {
     
     public boolean won(int time){
         return this.hits[this.gameTime(time)]==9;
+    }
+    
+    public int getBomb(int time){
+        return this.gameTime(time)==0? bomb1: bomb2;
+    }
+    
+    public void clearBomb(int time){
+        if(this.gameTime(time)==0){
+            bomb1--;
+        } else {
+            bomb2--;
+        }
+    }
+    
+    public boolean played(int time, ArrayList<Integer> index){
+        if(this.gameTime(time)==0){
+            return this.checksCorrects1[index.get(0)][index.get(1)]==1;
+        } else {
+            return this.checksCorrects2[index.get(0)][index.get(1)]==1;
+        }
+    }
+    
+    public void printCheck(int time){
+        for(int i=0;i<7;i++){
+            for(int j=0;j<7;j++){
+                System.out.printf("%d ", this.gameTime(time)==0? this.checksCorrects1[i][j]: this.checksCorrects2[i][j]);
+            }
+        }
+        System.out.println("");
     }
 }

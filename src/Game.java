@@ -50,7 +50,7 @@ public class Game {
         while(option<1 || option>3){
             print("ln", "Escolha uma opção entre 1 e 3.");
             print("", "Console: ");
-            sc.nextInt();
+            option = sc.nextInt();
         }
         
         switch (option){
@@ -58,7 +58,7 @@ public class Game {
                 this.getRules();
                 this.menu();
             case 3:
-                break;
+                return;
             default:
                 break;
         }

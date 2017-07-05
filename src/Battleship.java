@@ -52,29 +52,42 @@ public class Battleship {
                
                ArrayList<Integer> index = player.getIndexArray(input);
                
-               if(DEBUG) System.out.println(index);
-               
-               boolean hit = player.hit(currentGeneratedField, index);
-               
-               game.updateField(hit, currentField, index, name);
-               
-               if(hit){
-                   if(player.gameTime(time)==0 && player.checksCorrects1[index.get(0)][index.get(1)]==0){
-                       player.checksCorrects1[index.get(0)][index.get(1)]=1;
-                       player.hits[player.gameTime(time)]++;
-                   } else if(player.gameTime(time)==1 && player.checksCorrects2[index.get(0)][index.get(1)]==0) {
-                       player.checksCorrects2[index.get(0)][index.get(1)]=1;
-                       player.hits[player.gameTime(time)]++;
-                   }
-                   
-                   if(player.won(time)){
-                       System.out.printf("\nParabéns, %s! Você venceu o jogo!\n", name);
-                       break;
-                   }
+               if(player.played(time, index)){
+                   time--;
+                   System.out.printf("%s, você atirou em uma posição que já tinha escolhido. Atire novamente.", name);
                }
                
-               game.separator();
-               time++;
+               if(player.gameTime(time)==0){
+                   player.checksCorrects1[index.get(0)][index.get(1)]=1;
+               } else {
+                   player.checksCorrects2[index.get(0)][index.get(1)]=1;
+               }
+             
+                if(DEBUG) System.out.println(index);
+
+                boolean hit = player.hit(currentGeneratedField, index);
+
+                game.updateField(hit, currentField, index, name);
+
+                if(hit){
+                    if(player.gameTime(time)==0 && player.checksCorrects1[index.get(0)][index.get(1)]==0){
+                        player.checksCorrects1[index.get(0)][index.get(1)]=1;
+                        player.hits[player.gameTime(time)]++;
+                    } else if(player.gameTime(time)==1 && player.checksCorrects2[index.get(0)][index.get(1)]==0) {
+                        player.checksCorrects2[index.get(0)][index.get(1)]=1;
+                        player.hits[player.gameTime(time)]++;
+                    }
+
+                    if(player.won(time)){
+                        System.out.printf("\nParabéns, %s! Você venceu o jogo!\n", name);
+                        break;
+                    }
+                }
+
+                game.separator();
+                time++;
+                
+                player.printCheck(time);
            }
         }
         
