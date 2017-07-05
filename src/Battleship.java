@@ -52,10 +52,9 @@ public class Battleship {
                
                ArrayList<Integer> index = player.getIndexArray(input);
                
-               boolean flag;
+               boolean flag = true;
                
                if(player.played(time, index)){
-                    flag = false;
                     if(flag==false){
                        time--;
                        flag=true;
@@ -93,8 +92,6 @@ public class Battleship {
                      time++;
                      flag=false;
                }
-               System.out.println(time);
-               
            }
         }
     }

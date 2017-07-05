@@ -65,7 +65,14 @@ public class Game {
     }
     
     public void getRules(){
-        
+        this.print("ln", "\n-------------------------------- REGRAS ---------------------------------------\n");
+        this.print("ln", "- Jogadores: 2;");
+        this.print("ln", "- Tabuleiros - 2 tabuleiros 7x7;");
+        this.print("ln", "- Navios - Cada jogador possui 3 navios:");
+        this.print("ln", "    - 4, 3 e 2 posiçoes;");
+        this.print("ln", "- Objetivo - Ser o último jogador a possuir algum navio não destruído.");
+        this.print("", "\nBom jogo!");
+        this.separator();
     }
     
     public char[][] getMatrix(int time){
