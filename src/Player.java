@@ -18,8 +18,9 @@ public class Player {
         char row = input.charAt(0);
         char column = input.charAt(1);
 
-        while((row<'A' || row>'G') && (column<'1' || column>'7')){
+        while((row<'A' || row>'G') || (column<'1' || column>'7')){
             System.out.println("Posição inválida. Realize a leitura novamente.");
+            System.out.print("Jogada: ");
             input = scanner.nextLine();
             row = input.charAt(0);
             column = input.charAt(1);

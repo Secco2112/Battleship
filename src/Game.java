@@ -1,5 +1,7 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,6 +10,8 @@ import java.nio.file.Paths;
 public class Game {
     char completeField1[][], completeField2[][];
     char field1[][], field2[][];
+    File dataFile =  new File("");
+    static boolean AUTOSAVE = false;
     
     Ship ship = new Ship();
     Player player = new Player();
@@ -24,6 +28,16 @@ public class Game {
         this.field2 = board2;
         this.completeField1 = complete1;
         this.completeField2 = complete2;
+        
+        if(AUTOSAVE){
+            try{
+                String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+                dataFile = new File(currentPath + "/dist/save.txt");
+                dataFile.createNewFile(); 
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
     
     public void print(String format, String message){
@@ -41,26 +55,57 @@ public class Game {
     public void menu(){
         print("ln", "BATALHA NAVAL!\n");
         print("ln", "1. Novo jogo");
-        print("ln", "2. Regras");
-        print("ln", "3. Sair");
-        
-        print("", "Console: ");
-        int option = sc.nextInt();
-        
-        while(option<1 || option>3){
-            print("ln", "Escolha uma opção entre 1 e 3.");
-            print("", "Console: ");
-            option = sc.nextInt();
-        }
-        
-        switch (option){
-            case 2:
-                this.getRules();
-                this.menu();
-            case 3:
-                return;
-            default:
-                break;
+        if(dataFile.exists() && !dataFile.isDirectory()){
+            print("ln", "2. Carregar jogo");
+            print("ln", "3. Regras");
+            print("ln", "4. Sair");
+            
+            print("", "\nConsole: ");
+            int option = sc.nextInt();
+
+            while(option<1 || option>4){
+                print("ln", "Escolha uma opção entre 1 e 4.");
+                print("", "\nConsole: ");
+                option = sc.nextInt();
+            }
+            
+            switch (option){
+                case 2:
+                    AUTOSAVE = true;
+                    menu();
+                case 3:
+                    getRules();
+                    menu();
+                case 4:
+                    System.exit(0);
+                default:
+                    break;
+            }
+        } else {
+            print("ln", "2. Ativar autosalvamento");
+            print("ln", "3. Regras");
+            print("ln", "4. Sair");
+            
+            print("", "\nConsole: ");
+            int option = sc.nextInt();
+
+            while(option<1 || option>4){
+                print("ln", "Escolha uma opção entre 1 e 4.");
+                print("", "\nConsole: ");
+                option = sc.nextInt();
+            }
+            switch (option){
+                case 2:
+                    print("ln", "Jogo carregado com sucesso.");
+                    menu();
+                case 3:
+                    getRules();
+                    menu();
+                case 4:
+                    System.exit(0);
+                default:
+                    break;
+            }
         }
     }
     
@@ -105,17 +150,29 @@ public class Game {
         }
     }
     
-    public void saveGame() throws FileNotFoundException{
-        try {
-            String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
-
-            File dataFile = new File(currentPath + "/dist/save.txt");
-            dataFile.createNewFile();
-            Scanner fileReader = new Scanner(dataFile);
-            
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void writeField(char field[][], BufferedWriter bw) throws IOException{
+        for(int i=0;i<7;i++){
+            for(int j=0;j<7;j++){
+                try{
+                    bw.write(field[i][j] + " ");
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
+        bw.newLine();
+    }
+    
+    public void saveGame() throws FileNotFoundException, IOException{
+        Scanner fileReader = new Scanner(dataFile);
+        FileWriter writer = new FileWriter(dataFile.getAbsoluteFile());
+        BufferedWriter bufWriter = new BufferedWriter(writer);
+
+        this.writeField(field1, bufWriter);
+        this.writeField(field2, bufWriter);
+        this.writeField(completeField1, bufWriter);
+        this.writeField(completeField2, bufWriter);
+        bufWriter.close();
     }
     
     public void printBoard(int time){

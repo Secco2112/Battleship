@@ -92,6 +92,7 @@ public class Battleship {
                      time++;
                      flag=false;
                }
+               game.saveGame();
            }
         }
     }
